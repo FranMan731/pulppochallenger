@@ -10,8 +10,8 @@ type options = {
 
 interface SearchState {
     options: Array<options>,
-    filter: any,
     thereAreFilters: boolean,
+    filter: any,
     error: {
         status: number,
         message: string,
@@ -149,8 +149,9 @@ const searchSlice = createSlice({
                 }
             }
 
-            if (state.filter.oldSearch !== state.filter.search) {
+            if (state.filter.oldSearch !== state.filter.search || !state.filter.offset) {
                 state.filter.oldSearch = state.filter.search;
+                state.filter.offset = 0;
                 state.data = [...data];
             } else {
                 state.data = [...state.data, ...data];

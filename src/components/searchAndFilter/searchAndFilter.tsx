@@ -16,10 +16,12 @@ import { useAppSelector } from "../../app/hooks";
 
 interface SearchProps {
     handleOnChange: (type: string, value: any) => void,
-    handleClearFilters: () => void
+    handleClearFilters: () => void,
+    handleFilter: () => void,
+    handleCancelFilter: () => void,
 }
 
-const SearchAndFilter: React.FC<SearchProps> = ({ handleOnChange, handleClearFilters }) => {
+const SearchAndFilter: React.FC<SearchProps> = ({ handleOnChange, handleClearFilters, handleFilter, handleCancelFilter }) => {
     const [openModal, setOpenModal] = useState(false);
     const [mobile, setMobile] = useState(true);
     const { search } = useAppSelector((state: any) => state.app);
@@ -34,7 +36,7 @@ const SearchAndFilter: React.FC<SearchProps> = ({ handleOnChange, handleClearFil
 
     const handleModal = () => {
         setOpenModal(prevState => !prevState);
-    }    
+    }
 
     return (
         <>
@@ -68,8 +70,14 @@ const SearchAndFilter: React.FC<SearchProps> = ({ handleOnChange, handleClearFil
                 className={styles.modalContainer}
                 visible={openModal}
                 closable
-                onOk={() => handleModal()}
-                onCancel={() => handleModal()}
+                onOk={() => {
+                    handleModal();
+                    handleFilter();
+                }}
+                onCancel={() => {
+                    handleModal();
+                    handleCancelFilter();
+                }}
                 okText="Filter"
                 cancelText="Reset Filters"
             >   

@@ -8,7 +8,7 @@ import Result from "../components/result/result";
 import styles from "../styles/Search.module.scss";
 //Redux
 import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { areThereFilters, nextPage, resetFilters, searchProperties, setFilter } from "../app/reducers/searchSlice";
+import { areThereFilters, nextPage, resetFilters, resetPages, searchProperties, setFilter } from "../app/reducers/searchSlice";
 
 const Search: NextPage = () => {
     const dispatch = useAppDispatch();
@@ -90,12 +90,25 @@ const Search: NextPage = () => {
         }
     }
 
+    const handleFilter = () => {
+        if(search.thereAreFilters) {
+            dispatch(resetPages());
+            handleRequestToApi();
+        }
+    }
+
+    const handleCancelFilter = () => {
+        dispatch(resetFilters());
+    }
+
     return (
         <div className={`${search.filter.search != "" ? styles.transformContainer : styles.container}`}>
             <div className={styles.main}>
                 <SearchAndFilter
                     handleOnChange={handleOnChange}
                     handleClearFilters={handleClearFilters}
+                    handleFilter={handleFilter}
+                    handleCancelFilter={handleCancelFilter}
                 />
             </div>
             <div className={styles.result}>
