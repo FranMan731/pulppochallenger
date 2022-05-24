@@ -54,7 +54,7 @@ const SearchAndFilter: React.FC<SearchProps> = ({ handleOnChange, handleClearFil
                 </Button>
                 {search.thereAreFilters ? (
                     <Button 
-                        size={mobile ? "large" : "small"}
+                        size={mobile ? "small" : "large"}
                         icon={<ClearOutlined />}
                         onClick={() => handleClearFilters()}
                     >
